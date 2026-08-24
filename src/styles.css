@@ -1,0 +1,182 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Ferhat Çelik Otomotiv — dark luxury automotive design system.
+ * All colors in oklch. Single (dark) theme by design.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.875rem;
+  --background: oklch(0.158 0.017 262);
+  --foreground: oklch(1 0 0);
+  --surface: oklch(0.196 0.019 262);
+  --surface-2: oklch(0.238 0.026 260);
+  --card: oklch(0.196 0.019 262);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.196 0.019 262);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(0.865 0.171 91.5);
+  --primary-foreground: oklch(0.158 0.017 262);
+  --secondary: oklch(0.264 0.03 259);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.264 0.03 259);
+  --muted-foreground: oklch(0.72 0.02 258);
+  --accent: oklch(0.865 0.171 91.5);
+  --accent-foreground: oklch(0.158 0.017 262);
+  --destructive: oklch(0.62 0.23 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.288 0.033 258);
+  --input: oklch(0.288 0.033 258);
+  --ring: oklch(0.865 0.171 91.5);
+  --whatsapp: oklch(0.63 0.16 152);
+  --whatsapp-foreground: oklch(1 0 0);
+
+  --gradient-mesh: radial-gradient(
+      60% 60% at 15% 20%,
+      color-mix(in oklab, var(--primary) 18%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 55% at 85% 10%,
+      color-mix(in oklab, oklch(0.6 0.15 250) 22%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 60% at 60% 100%,
+      color-mix(in oklab, var(--primary) 12%, transparent),
+      transparent 75%
+    );
+  --shadow-glow: 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent),
+    0 24px 60px -20px color-mix(in oklab, var(--primary) 40%, transparent);
+  --shadow-elevate: 0 30px 60px -25px oklch(0 0 0 / 0.8);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@utility mesh-bg {
+  background-image: var(--gradient-mesh);
+  background-size: 160% 160%;
+  animation: mesh-drift 18s ease-in-out infinite alternate;
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 55%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, oklch(1 0 0) 10%, transparent);
+}
+
+@utility glow-ring {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility text-gradient-gold {
+  background: linear-gradient(
+    100deg,
+    var(--primary),
+    color-mix(in oklab, var(--primary) 55%, oklch(1 0 0))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes mesh-drift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes badge-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 55%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 18px 4px color-mix(in oklab, var(--primary) 30%, transparent);
+  }
+}
+
+@utility pulse-glow {
+  animation: badge-pulse 2.2s ease-in-out infinite;
+}
+
+/* Visible keyboard focus across the whole site */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* Respect reduced-motion: kill ambient/decorative animation cost */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
