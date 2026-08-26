@@ -3,6 +3,7 @@ import { ExternalLink, MessageCircle, Gauge, Fuel, Cog } from "lucide-react";
 import {
   formatKm,
   formatPrice,
+  highResolutionVehicleImage,
   whatsappLink,
   type Vehicle,
 } from "@/data/vehicles";
@@ -21,12 +22,16 @@ export function VehicleCard({ vehicle, index }: { vehicle: Vehicle; index: numbe
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-background">
         <img
-          src={vehicle.image}
+          src={highResolutionVehicleImage(vehicle.image)}
           alt={vehicle.title}
           loading="lazy"
           decoding="async"
           width={1024}
           height={768}
+          onError={(event) => {
+            event.currentTarget.onerror = null;
+            event.currentTarget.src = vehicle.image;
+          }}
           className={`h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 ${
             sold ? "grayscale" : ""
           }`}

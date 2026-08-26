@@ -39,6 +39,9 @@ export const formatPrice = (v: number) =>
 export const formatKm = (v: number) =>
   new Intl.NumberFormat("tr-TR").format(v) + " km";
 
+export const highResolutionVehicleImage = (url: string) =>
+  url.replace(/\/lthmb_/, "/x5_").replace(/\/thmb_/, "/x5_");
+
 export const whatsappLink = (text: string) =>
   `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
 

@@ -3,7 +3,12 @@ import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import { ArrowUpRight, Gauge, ShieldCheck, Sparkles } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { formatKm, formatPrice, type Vehicle } from "@/data/vehicles";
+import {
+  formatKm,
+  formatPrice,
+  highResolutionVehicleImage,
+  type Vehicle,
+} from "@/data/vehicles";
 
 type SpotlightCardProps = {
   children: ReactNode;
@@ -89,11 +94,15 @@ export function ShowroomSpotlightDemo({ vehicles }: { vehicles: Vehicle[] }) {
             <CardSpotlight key={car.id} className="min-h-[520px]">
               <div className="relative h-72 overflow-hidden">
                 <img
-                  src={car.image}
+                  src={highResolutionVehicleImage(car.image)}
                   alt={car.title}
                   width={1600}
                   height={1067}
                   loading="lazy"
+                  onError={(event) => {
+                    event.currentTarget.onerror = null;
+                    event.currentTarget.src = car.image;
+                  }}
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105 group-hover:saturate-125"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/5 to-black/10" />
