@@ -153,7 +153,7 @@ function Index() {
         </div>
       </section>
 
-      <ShowroomSpotlightDemo />
+      <ShowroomSpotlightDemo vehicles={vehicleList} />
 
       {/* GRID */}
       <section
