@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { Phone, MessageCircle, ExternalLink, Car } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Phone, MessageCircle, ExternalLink } from "lucide-react";
 import { PHONE, SAHIBINDEN_STORE, whatsappLink } from "@/data/vehicles";
 
 export function Header() {
@@ -11,10 +12,16 @@ export function Header() {
       className="fixed inset-x-0 top-0 z-50 glass"
     >
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:px-6">
-        <a href="#top" className="flex min-w-0 items-center gap-3">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
-            <Car className="h-5 w-5" />
-          </span>
+        <div className="flex min-w-0 items-center gap-3">
+          <Link
+            to="/admin"
+            aria-label="Araç ekleme ve çıkarma yönetimini aç"
+            title="Araç Yönetimi"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary font-display text-sm font-black tracking-[-0.04em] text-primary-foreground transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            FÇ
+          </Link>
+          <a href="#top" className="min-w-0">
           <span className="min-w-0">
             <span className="block truncate font-display text-sm font-extrabold leading-tight sm:text-base">
               Ferhat Çelik
@@ -23,7 +30,8 @@ export function Header() {
               Otomotiv
             </span>
           </span>
-        </a>
+          </a>
+        </div>
 
         <div className="flex shrink-0 items-center gap-2">
           <a

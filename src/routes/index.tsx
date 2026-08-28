@@ -17,18 +17,17 @@ import {
   SAHIBINDEN_STORE,
   whatsappLink,
 } from "@/data/vehicles";
-import { getSahibindenInventory } from "@/lib/sahibinden-sync";
+import { getCars } from "@/lib/cars";
 import { Header } from "@/components/site/Header";
 import { MobileBar } from "@/components/site/MobileBar";
 import { VehicleCard } from "@/components/site/VehicleCard";
-import { ShowroomSpotlightDemo } from "@/components/ShowroomSpotlightDemo";
 import { ShowroomFleetDemo } from "@/components/ShowroomFleetDemo";
 
 
 const SITE_URL = "https://ferhat-celik-otomotiv.vercel.app";
 
 export const Route = createFileRoute("/")({
-  loader: () => getSahibindenInventory(),
+  loader: () => getCars(),
   head: () => ({
     meta: [
       { title: "Ferhat Çelik Otomotiv | Premium İkinci El Araç Galerisi" },
@@ -76,8 +75,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const inventory = Route.useLoaderData();
-  const vehicleList = inventory.vehicles;
+  const vehicleList = Route.useLoaderData();
+  const featuredVehicles = vehicleList.filter((vehicle) => vehicle.featured && !vehicle.sold);
+  const collectionVehicles = featuredVehicles.length > 0 ? featuredVehicles : vehicleList.filter((vehicle) => !vehicle.sold).slice(0, 5);
+  const collectionIds = new Set(collectionVehicles.map((vehicle) => vehicle.id));
+  const remainingVehicles = vehicleList.filter((vehicle) => !collectionIds.has(vehicle.id));
 
   return (
     <div id="top" className="min-h-screen bg-background">
@@ -154,8 +156,7 @@ function Index() {
         </div>
       </section>
 
-      <ShowroomSpotlightDemo vehicles={vehicleList} />
-      <ShowroomFleetDemo />
+      <ShowroomFleetDemo vehicles={collectionVehicles} />
 
       {/* GRID */}
       <section
@@ -166,18 +167,10 @@ function Index() {
         <div className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
           <div className="min-w-0">
             <h2 id="araclar-baslik" className="text-2xl font-extrabold sm:text-4xl">
-              Galerideki Araçlar
+              Diğer Galeri Araçları
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Güncel araçlar doğrudan Ferhat Çelik Sahibinden mağazasındaki ilanlardan alınır.
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground" title={inventory.message}>
-              {inventory.source === "live"
-                ? `Son senkronizasyon: ${new Intl.DateTimeFormat("tr-TR", {
-                    dateStyle: "short",
-                    timeStyle: "short",
-                  }).format(new Date(inventory.syncedAt))}`
-                : "Sahibinden bağlantısı geçici olarak kullanılamıyor; son doğrulanmış liste gösteriliyor."}
+              Güncel vitrin araçları Ferhat Çelik Otomotiv tarafından yönetilir.
             </p>
             <a
               href={SAHIBINDEN_STORE}
@@ -190,20 +183,20 @@ function Index() {
             </a>
           </div>
           <span className="shrink-0 rounded-xl border border-border bg-surface px-3 py-2 text-sm font-bold text-primary">
-            {vehicleList.length} araç
+            {remainingVehicles.length} araç
           </span>
         </div>
 
-        {vehicleList.length === 0 ? (
+        {remainingVehicles.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border bg-surface p-10 text-center sm:p-14">
-            <h3 className="text-lg font-bold">Şu anda yayında araç bulunmuyor</h3>
+            <h3 className="text-lg font-bold">Tüm araçlar seçkin koleksiyonda</h3>
             <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
-              Güncel ilanlarımız için Sahibinden mağazamızı ziyaret edebilirsiniz.
+              Öne çıkan araçlarımızı yukarıdaki koleksiyondan inceleyebilirsiniz.
             </p>
           </div>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {vehicleList.map((v, i) => (
+            {remainingVehicles.map((v, i) => (
               <VehicleCard key={v.id} vehicle={v} index={i} />
             ))}
           </div>
@@ -258,7 +251,7 @@ function Index() {
                     {PHONE_DISPLAY}
                   </a>
                   <br />
-                  <span className="text-muted-foreground">0212 555 04 42 (Galeri)</span>
+                  <span className="text-muted-foreground">Telefon &amp; WhatsApp</span>
                 </span>
               </li>
               <li className="flex items-start gap-3">
