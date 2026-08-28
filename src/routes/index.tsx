@@ -22,6 +22,7 @@ import { Header } from "@/components/site/Header";
 import { MobileBar } from "@/components/site/MobileBar";
 import { VehicleCard } from "@/components/site/VehicleCard";
 import { ShowroomSpotlightDemo } from "@/components/ShowroomSpotlightDemo";
+import { ShowroomFleetDemo } from "@/components/ShowroomFleetDemo";
 
 
 const SITE_URL = "https://ferhat-celik-otomotiv.vercel.app";
@@ -154,6 +155,7 @@ function Index() {
       </section>
 
       <ShowroomSpotlightDemo vehicles={vehicleList} />
+      <ShowroomFleetDemo />
 
       {/* GRID */}
       <section
