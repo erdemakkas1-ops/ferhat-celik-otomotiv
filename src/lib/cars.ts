@@ -19,6 +19,9 @@ export function rowToVehicle(row: CarRow): Vehicle {
 export async function getCars(): Promise<Vehicle[]> {
   const { data, error } = await supabase.from("cars").select("*")
     .order("is_sold", { ascending: true }).order("created_at", { ascending: false });
-  if (error) throw new Error(`Araçlar alınamadı: ${error.message}`);
+  if (error) {
+    console.error("Araç vitrini geçici olarak yüklenemedi.");
+    return [];
+  }
   return (data ?? []).map(rowToVehicle);
 }

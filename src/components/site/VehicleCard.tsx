@@ -29,8 +29,14 @@ export function VehicleCard({ vehicle, index }: { vehicle: Vehicle; index: numbe
           width={1024}
           height={768}
           onError={(event) => {
-            event.currentTarget.onerror = null;
-            event.currentTarget.src = vehicle.image;
+            const image = event.currentTarget;
+            if (image.dataset["fallback"] !== "original") {
+              image.dataset["fallback"] = "original";
+              image.src = vehicle.image;
+              return;
+            }
+            image.onerror = null;
+            image.src = "/car-placeholder.svg";
           }}
           className={`h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 ${
             sold ? "grayscale" : ""
@@ -40,11 +46,6 @@ export function VehicleCard({ vehicle, index }: { vehicle: Vehicle; index: numbe
         {vehicle.year > 0 && (
           <span className="absolute left-3 top-3 rounded-lg bg-background/80 px-2.5 py-1 text-xs font-bold text-primary backdrop-blur">
             {vehicle.year}
-          </span>
-        )}
-        {vehicle.badge && !sold && (
-          <span className="pulse-glow absolute right-3 top-3 rounded-lg bg-primary px-2.5 py-1 text-xs font-extrabold text-primary-foreground">
-            {vehicle.badge}
           </span>
         )}
         {sold && (
@@ -60,12 +61,8 @@ export function VehicleCard({ vehicle, index }: { vehicle: Vehicle; index: numbe
         <h3 className="font-display text-base font-bold leading-snug">{vehicle.title}</h3>
 
         <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-          {vehicle.fuel !== "Belirtilmemiş" && (
-            <Tag icon={<Fuel className="h-3.5 w-3.5" />}>{vehicle.fuel}</Tag>
-          )}
-          {vehicle.transmission !== "Belirtilmemiş" && (
-            <Tag icon={<Cog className="h-3.5 w-3.5" />}>{vehicle.transmission}</Tag>
-          )}
+          <Tag icon={<Fuel className="h-3.5 w-3.5" />}>{vehicle.fuel}</Tag>
+          <Tag icon={<Cog className="h-3.5 w-3.5" />}>{vehicle.transmission}</Tag>
           {vehicle.km > 0 && (
             <Tag icon={<Gauge className="h-3.5 w-3.5" />}>{formatKm(vehicle.km)}</Tag>
           )}

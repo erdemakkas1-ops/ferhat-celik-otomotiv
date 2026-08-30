@@ -39,6 +39,14 @@ export function ExpandingCards({ items, className }: ExpandingCardsProps) {
             <img
               src={item.image}
               alt={item.title}
+              loading="lazy"
+              decoding="async"
+              width="1280"
+              height="720"
+              onError={(event) => {
+                event.currentTarget.onerror = null;
+                event.currentTarget.src = "/car-placeholder.svg";
+              }}
               className={cn(
                 "absolute inset-0 h-full w-full object-cover transition-all duration-700",
                 active ? "scale-100 grayscale-0" : "scale-105 grayscale",

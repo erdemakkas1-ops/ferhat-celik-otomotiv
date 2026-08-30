@@ -35,7 +35,7 @@ function CookiePolicyPage() {
         <h2 className="text-xl font-extrabold text-foreground">Üçüncü taraf hizmetleri</h2>
         <p className="mt-2">
           Araç ilanı görselleri Sahibinden altyapısından, yazı tipleri Google Fonts
-          hizmetinden yüklenebilir. Sahibinden mağazası, Google Haritalar, WhatsApp veya
+          hizmetinden yüklenebilir. Sahibinden mağazası, WhatsApp veya
           sosyal medya bağlantılarına tıkladığınızda ilgili hizmetlerin kendi çerez ve
           gizlilik politikaları geçerli olur.
         </p>

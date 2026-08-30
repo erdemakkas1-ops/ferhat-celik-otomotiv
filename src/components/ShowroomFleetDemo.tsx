@@ -1,16 +1,16 @@
-import { ArrowUpRight, Award, Flame, Gauge, ShieldCheck, Zap } from "lucide-react";
+import { ArrowUpRight, Award, Flame, Gauge, ShieldCheck, Zap, type LucideIcon } from "lucide-react";
 
 import { ExpandingCards, type CardItem } from "@/components/ui/expanding-cards";
 import { formatKm, formatPrice, highResolutionVehicleImage, type Vehicle } from "@/data/vehicles";
 
-const icons = [Gauge, Zap, Flame, ShieldCheck, Award];
+const icons: LucideIcon[] = [Gauge, Zap, Flame, ShieldCheck, Award];
 
 export function ShowroomFleetDemo({ vehicles }: { vehicles: Vehicle[] }) {
   const selected = vehicles.filter((vehicle) => !vehicle.sold).slice(0, 5);
   if (!selected.length) return null;
 
   const items: CardItem[] = selected.map((vehicle, index) => {
-    const Icon = icons[index % icons.length];
+    const Icon = icons[index % icons.length] ?? Gauge;
     return {
       id: vehicle.id,
       title: vehicle.title,

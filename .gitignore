@@ -16,6 +16,19 @@ dist-ssr
 .nitro
 *.local
 
+# Environment files (keep only the documented template)
+.env
+.env.*
+!.env.example
+
+# Private keys and cloud credentials
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+service-account*.json
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
@@ -32,6 +45,6 @@ dist-ssr
 *.sw?
 
 
-.vercel
+.vercel/
 work/
 

@@ -51,7 +51,7 @@ function LoadingScreen() {
 }
 
 function LoginScreen({ unauthorized }: { unauthorized: boolean }) {
-  const [email, setEmail] = useState(import.meta.env.VITE_ADMIN_EMAIL ?? "");
+  const [email, setEmail] = useState(import.meta.env["VITE_ADMIN_EMAIL"] ?? "");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(unauthorized ? "Bu hesap vitrin yöneticisi olarak yetkilendirilmemiş." : "");
   const [loading, setLoading] = useState(false);
@@ -134,7 +134,7 @@ function AdminDashboard() {
         {message && <p role="alert" className="mt-4 rounded-xl border border-red-900/50 bg-red-950/40 p-3 text-sm text-red-300">{message}</p>}
         {showForm && <CarForm onSaved={() => { setShowForm(false); void refresh(); }} onError={setMessage} />}
         <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-surface">
-          {loading ? <p className="p-10 text-center text-muted-foreground">Yükleniyor...</p> : cars.map((car) => { const vehicle = rowToVehicle(car); return <div key={car.id} className="grid gap-4 border-b border-border p-4 last:border-0 md:grid-cols-[1fr_140px_120px_80px] md:items-center"><div className="flex min-w-0 items-center gap-4"><img src={car.image_url} alt="" className="h-20 w-28 shrink-0 rounded-xl object-cover" /><div className="min-w-0"><p className="truncate font-bold">{car.title}</p><p className="mt-1 text-xs text-muted-foreground">{car.year} · {formatKm(car.km)} · {car.fuel} · {car.transmission}</p></div></div><p className="font-bold text-primary">{formatPrice(vehicle.price)}</p><button onClick={() => toggleSold(car)} className={`rounded-full px-3 py-2 text-xs font-black ${car.is_sold ? "bg-red-950 text-red-300" : "bg-emerald-950 text-emerald-300"}`}>{car.is_sold ? "SATILDI" : "SATIŞTA"}</button><button onClick={() => removeCar(car)} className="inline-flex items-center justify-center rounded-xl border border-red-900/60 p-2.5 text-red-400 hover:bg-red-950" aria-label={`${car.title} aracını sil`}><Trash2 className="h-4 w-4" /></button></div>; })}
+          {loading ? <p className="p-10 text-center text-muted-foreground">Yükleniyor...</p> : cars.map((car) => { const vehicle = rowToVehicle(car); return <div key={car.id} className="grid gap-4 border-b border-border p-4 last:border-0 md:grid-cols-[1fr_140px_120px_80px] md:items-center"><div className="flex min-w-0 items-center gap-4"><img src={car.image_url} alt="" loading="lazy" decoding="async" width="112" height="80" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = "/car-placeholder.svg"; }} className="h-20 w-28 shrink-0 rounded-xl object-cover" /><div className="min-w-0"><p className="truncate font-bold">{car.title}</p><p className="mt-1 text-xs text-muted-foreground">{car.year} · {formatKm(car.km)} · {car.fuel} · {car.transmission}</p></div></div><p className="font-bold text-primary">{formatPrice(vehicle.price)}</p><button onClick={() => toggleSold(car)} className={`rounded-full px-3 py-2 text-xs font-black ${car.is_sold ? "bg-red-950 text-red-300" : "bg-emerald-950 text-emerald-300"}`}>{car.is_sold ? "SATILDI" : "SATIŞTA"}</button><button onClick={() => removeCar(car)} className="inline-flex items-center justify-center rounded-xl border border-red-900/60 p-2.5 text-red-400 hover:bg-red-950" aria-label={`${car.title} aracını sil`}><Trash2 className="h-4 w-4" /></button></div>; })}
         </div>
       </div>
     </main>
@@ -152,6 +152,8 @@ function CarForm({ onSaved, onError }: { onSaved: () => void; onError: (message:
   async function submit(event: FormEvent) {
     event.preventDefault();
     if (!file) { onError("Lütfen bir vitrin görseli seçin."); return; }
+    if (file.size > 10 * 1024 * 1024) { onError("Vitrin görseli en fazla 10 MB olabilir."); return; }
+    if (!["image/jpeg", "image/png", "image/webp", "image/avif"].includes(file.type)) { onError("Yalnızca JPG, PNG, WebP veya AVIF görsel yükleyebilirsiniz."); return; }
     setSaving(true); onError("");
     const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
     const path = `${new Date().getFullYear()}/${crypto.randomUUID()}.${extension}`;

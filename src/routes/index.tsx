@@ -5,8 +5,6 @@ import {
   MapPin,
   Phone,
   Clock,
-  Instagram,
-  Facebook,
   MessageCircle,
 } from "lucide-react";
 
@@ -24,7 +22,8 @@ import { VehicleCard } from "@/components/site/VehicleCard";
 import { ShowroomFleetDemo } from "@/components/ShowroomFleetDemo";
 
 
-const SITE_URL = "https://ferhat-celik-otomotiv.vercel.app";
+const SITE_URL =
+  import.meta.env["VITE_SITE_URL"] ?? "https://ferhat-celik-otomotiv.vercel.app";
 
 export const Route = createFileRoute("/")({
   loader: () => getCars(),
@@ -34,14 +33,14 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Ferhat Çelik Otomotiv: ekspertiz raporlu, garantili ikinci el otomobiller. Takas imkanı, güvenli alım-satım ve Sahibinden kurumsal mağaza ilanları.",
+          "Ferhat Çelik Otomotiv güncel ikinci el araç vitrini, Sahibinden kurumsal mağaza ilanları ve doğrudan iletişim bilgileri.",
       },
       { name: "theme-color", content: "#0B0F17" },
       { property: "og:title", content: "Ferhat Çelik Otomotiv | Premium Araç Galerisi" },
       {
         property: "og:description",
         content:
-          "Ekspertiz raporlu, garantili ikinci el otomobiller. Takas imkanı ve güvenli alım-satım.",
+          "Güncel ikinci el araçları inceleyin ve Ferhat Çelik Otomotiv ile doğrudan iletişime geçin.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
@@ -51,7 +50,7 @@ export const Route = createFileRoute("/")({
       {
         name: "twitter:description",
         content:
-          "Ekspertiz raporlu, garantili ikinci el otomobiller. Takas imkanı ve güvenli alım-satım.",
+          "Güncel ikinci el araçları inceleyin ve Ferhat Çelik Otomotiv ile doğrudan iletişime geçin.",
       },
     ],
     links: [{ rel: "canonical", href: SITE_URL }],
@@ -63,9 +62,7 @@ export const Route = createFileRoute("/")({
           "@type": "AutoDealer",
           name: "Ferhat Çelik Otomotiv",
           url: SITE_URL,
-          description:
-            "Ekspertiz raporlu, garantili ikinci el otomobil galerisi. Takas ve güvenli alım-satım.",
-          areaServed: "İstanbul",
+          description: "Güncel ikinci el araç vitrini ve doğrudan iletişim kanalları.",
           priceRange: "₺₺₺",
         }),
       },
@@ -114,7 +111,7 @@ function Index() {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary"
           >
-            Ekspertizli · Garantili · Takaslı
+            Güncel Araçlar · Doğrudan İletişim
           </motion.p>
 
           <motion.h1
@@ -208,9 +205,8 @@ function Index() {
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">Hakkımızda</p>
           <h2 className="mt-3 text-2xl font-extrabold sm:text-4xl">Ferhat Çelik Otomotiv</h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
-            İstanbul Esenyurt'ta hizmet veren galerimizi bu sayfadan tanıyabilir,
-            Sahibinden'de yayınlanan güncel araçlarımızı inceleyebilir ve iletişim
-            kanallarımızdan bize ulaşabilirsiniz.
+            Galerimizi bu sayfadan tanıyabilir, Sahibinden'de yayınlanan güncel
+            araçlarımızı inceleyebilir ve iletişim kanallarımızdan bize ulaşabilirsiniz.
           </p>
         </div>
       </section>
@@ -223,20 +219,9 @@ function Index() {
             <div className="relative flex h-full flex-col items-center justify-center gap-3 p-8 text-center">
               <MapPin className="h-10 w-10 text-primary" />
               <p className="font-display text-lg font-bold">Ferhat Çelik Otomotiv</p>
-              <p className="text-sm text-muted-foreground">
-                Oto Sanayi Sitesi, Galericiler Cad. No: 42
-                <br />
-                Esenyurt / İstanbul
+              <p className="max-w-sm text-sm text-muted-foreground">
+                Açık adres ve yol tarifi bilgisi teslim öncesinde galeri sahibi tarafından doğrulanacaktır.
               </p>
-              <a
-                href="https://maps.google.com/?q=Esenyurt+Istanbul+galericiler+sitesi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground"
-              >
-                Yol Tarifi Al
-                <ExternalLink className="h-4 w-4" />
-              </a>
             </div>
           </div>
 
@@ -273,24 +258,6 @@ function Index() {
               >
                 <MessageCircle className="h-4 w-4" />
                 WhatsApp
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="grid h-11 w-11 place-items-center rounded-xl border border-border bg-surface-2/70 transition-colors hover:border-primary hover:text-primary"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="grid h-11 w-11 place-items-center rounded-xl border border-border bg-surface-2/70 transition-colors hover:border-primary hover:text-primary"
-              >
-                <Facebook className="h-4 w-4" />
               </a>
             </div>
           </div>
