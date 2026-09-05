@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CerezPolitikasiRouteImport } from './routes/cerez-politikasi'
 import { Route as KvkkRouteImport } from './routes/kvkk'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const KvkkRoute = KvkkRouteImport.update({
   path: '/kvkk',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/kvkk': typeof KvkkRoute
+  '/reset-password': typeof ResetPasswordRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/kvkk': typeof KvkkRoute
+  '/reset-password': typeof ResetPasswordRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,20 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/cerez-politikasi': typeof CerezPolitikasiRoute
   '/kvkk': typeof KvkkRoute
+  '/reset-password': typeof ResetPasswordRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/cerez-politikasi' | '/kvkk'
+  fullPaths: '/' | '/admin' | '/cerez-politikasi' | '/kvkk' | '/reset-password'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/cerez-politikasi' | '/kvkk'
-  id: '__root__' | '/' | '/admin' | '/cerez-politikasi' | '/kvkk'
+  to: '/' | '/admin' | '/cerez-politikasi' | '/kvkk' | '/reset-password'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/cerez-politikasi'
+    | '/kvkk'
+    | '/reset-password'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +82,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   CerezPolitikasiRoute: typeof CerezPolitikasiRoute
   KvkkRoute: typeof KvkkRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KvkkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +130,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   CerezPolitikasiRoute: CerezPolitikasiRoute,
   KvkkRoute: KvkkRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
