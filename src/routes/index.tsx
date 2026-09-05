@@ -20,6 +20,7 @@ import { Header } from "@/components/site/Header";
 import { MobileBar } from "@/components/site/MobileBar";
 import { VehicleCard } from "@/components/site/VehicleCard";
 import { ShowroomFleetDemo } from "@/components/ShowroomFleetDemo";
+import { CinematicIntro } from "@/components/site/CinematicIntro";
 
 
 const SITE_URL =
@@ -80,6 +81,7 @@ function Index() {
 
   return (
     <div id="top" className="min-h-screen bg-background">
+      <CinematicIntro />
       <a
         href="#icerik"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xl focus:bg-primary focus:px-4 focus:py-3 focus:text-sm focus:font-bold focus:text-primary-foreground"
@@ -89,7 +91,7 @@ function Index() {
       <Header />
       <MobileBar />
 
-      <main id="icerik">
+      <main id="icerik" tabIndex={-1}>
       {/* HERO */}
       <section className="relative overflow-hidden pt-24 sm:pt-28">
         <div className="absolute inset-0">
